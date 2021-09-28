@@ -7,7 +7,7 @@ const Market = () => {
     const Punto = () => {
         setMarket(!market)
     }
-    useEffect((market) => {
+    useEffect(() => {
         new Map ({
           setMarket,
           container: "mapContainer", // container id

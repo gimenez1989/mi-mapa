@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Map } from "maplibre-gl";
 import MarkerComponent from "../Marker";
-// import Raster from "../Raster";
+//import Raster from "../Raster";
 
 const MapUnico = () => {
   const [map, setMap] = useState(null);
   useEffect(() => {
     setMap(new Map({
-      container: "mapContainer", // container id
-      // con el style se puede cambiar la capa del mapa
+         //style: "https://demotiles.maplibre.org/style.json", // style URL
+        //Se cambio el style del mapa
       style: {
         version: 8,
         sources: {
@@ -32,8 +32,6 @@ const MapUnico = () => {
           },
         ],
       }, // style URL
-      center: [-80, -38], // starting position [lng, lat]
-      zoom: 3, // starting zoom
     }))
     // new Marker().setLngLat([-80, -38]).addTo(map)
   }, []);

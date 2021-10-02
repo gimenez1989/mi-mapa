@@ -1,22 +1,20 @@
 import React, { useEffect } from "react";
-import { Map, Marker } from "maplibre-gl";
+import { Map } from "maplibre-gl";
 
-const Market = () => {
+const MapUnico = () => {
   useEffect(() => {
-    const map = new Map({
+    new Map({
       container: "mapContainer", // container id
       style: "https://demotiles.maplibre.org/style.json", // style URL
       center: [-80, -38], // starting position [lng, lat]
       zoom: 3, // starting zoom
     });
-    new Marker().setLngLat([-80, -37]).addTo(map);
   }, []);
-
   return (
-      <div>
-        <div style={{ height: "100vh" }} id="mapContainer"></div>
-      </div>
+    <div>
+      <div style={{ height: "100vh" }} id="mapContainer"></div>
+    </div>
   );
 };
 
-export default Market;
+export default MapUnico;

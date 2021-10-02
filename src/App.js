@@ -1,6 +1,5 @@
 import React from "react";
-import Marker from "./Marker/index";
-import Raster from "./Raster/index";
+import Map from "./Mapa/index";
 import "./App.css";
 
 function App() {
@@ -8,8 +7,7 @@ function App() {
 
   return (
     <div>
-      <Marker />
-      <Raster />
+      <Map />
     </div>
   );
 }

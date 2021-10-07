@@ -1,45 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { Map } from "maplibre-gl";
 import MarkerComponent from "../Marker";
-//import Raster from "../Raster";
 
 const MapUnico = () => {
   const [map, setMap] = useState(null);
+  const [capas, setCapas] = useState(false);
+
+  const Cambiar = () => {
+    setCapas(!capas);
+  };
+
   useEffect(() => {
-    setMap(new Map({
-         //style: "https://demotiles.maplibre.org/style.json", // style URL
+    setMap(
+      new Map({
+        container: "mapContainer", // container id
+        //style: "https://demotiles.maplibre.org/style.json", // style URL
+        style:
+          "https://api.maptiler.com/maps/basic/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
         //Se cambio el style del mapa
-      style: {
-        version: 8,
-        sources: {
-          "raster-tiles": {
-            type: "raster",
-            tiles: [
-              "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg",
-            ],
-            tileSize: 256,
-            attribution:
-              'Map tiles by <a target="_top" rel="noopener" href="http://stamen.com">Stamen Design</a>, under <a target="_top" rel="noopener" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a target="_top" rel="noopener" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_top" rel="noopener" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>',
-          },
-        },
-        layers: [
-          {
-            id: "simple-tiles",
-            type: "raster",
-            source: "raster-tiles",
-            minzoom: 0,
-            maxzoom: 22,
-          },
-        ],
-      }, // style URL
-    }))
+
+        center: [-58.45, -34.59],
+        zoom: 7, // starting zoom
+      })
+    );
+
     // new Marker().setLngLat([-80, -38]).addTo(map)
   }, []);
 
+  const show = () => {
+      setMap(
+        new Map({
+          container: "mapContainer",
+          style: "https://demotiles.maplibre.org/style.json",
+
+          center: [-58.45, -34.59],
+          zoom: 3, // starting zoom
+        })
+      );
+  }      
   return (
     <div>
-      <div style={{ height: "100vh" }} id="mapContainer"></div>
+      <div style={{ height: "100vh" }} id="mapContainer" ></div>
       {map && <MarkerComponent map={map} />}
+      <div>
+        <button
+          onClick={() => {
+            Cambiar();
+            show()
+          }}
+        >
+          {
+            capas && !setMap ? (
+              <p>capa_2</p>
+            ) : (
+              <p>capa_1</p>
+            )
+          }
+        </button>
+      </div>
     </div>
   );
 };

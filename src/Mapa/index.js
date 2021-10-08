@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Map } from "maplibre-gl";
 import MarkerComponent from "../Marker";
+import Route from "../Route";
 
 const MapUnico = () => {
   const [map, setMap] = useState(null);
@@ -77,6 +78,7 @@ const MapUnico = () => {
     <div>
       <div style={{ height: "93vh" }} id="mapContainer"></div>
       {map && <MarkerComponent map={map} />}
+      {map && <Route map={map} />}
 
       {map && (
         <button

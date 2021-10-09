@@ -81,7 +81,7 @@ const MapUnico = () => {
       {map && <Route map={map} />}
 
       {map && (
-        <button
+        <button className="buttonCapas"
           onClick={() => {
             change();
           }}

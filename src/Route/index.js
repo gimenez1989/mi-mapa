@@ -45,9 +45,54 @@ const geojsonBsAs = {
   },
 };
 
+const geojsonPunto = {
+  type: "Feature",
+  geometry: {
+    type: "circle",
+    coordinates: []
+  }
+}
+
+const geojsonPuntoSource = {
+  type: "FeatureCollection",
+  features: []
+}
+
 const Route = ({ map }) => {
   useEffect(() => {
     map.on("load", () => {
+      map.on('click', (e) => {
+        console.log(e.lngLat)
+        var point = {
+          'type': 'Feature',
+          'geometry': {
+          'type': 'Point',
+          'coordinates': [e.lngLat.lng, e.lngLat.lat]
+          },
+          'properties': {
+          'id': String(new Date().getTime())
+          }
+        }
+        geojsonPuntoSource.features.push(point)
+        map.getSource('PuntoSource').setData(geojsonPuntoSource)
+        console.log(geojsonPuntoSource.features)
+      })
+      map.addSource("PuntoSource", {
+        type: "geojson",
+        data: geojsonPuntoSource,
+      });
+
+      map.addLayer({
+        id: "PuntoSource",
+        type: "circle",
+        source: "PuntoSource",
+        paint: {
+          "circle-color": "black",
+          "circle-opacity": 0.8,
+          "circle-radius": 5
+        },
+      });
+
       map.addSource("BuenosAires", {
         type: "geojson",
         data: geojsonBsAs,

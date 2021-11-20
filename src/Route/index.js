@@ -43,14 +43,6 @@ const geojsonBsAs = {
       ],
     ],
   },
-};
-
-const geojsonPunto = {
-  type: "Feature",
-  geometry: {
-    type: "circle",
-    coordinates: []
-  }
 }
 
 const geojsonPuntoSource = {
@@ -58,29 +50,46 @@ const geojsonPuntoSource = {
   features: []
 }
 
+const geojsonLineasSource = {
+  'type': 'FeatureCollection',
+  'features': [
+    {
+      type: 'Feature',
+      'geometry': {
+        'type': 'LineString',
+        'coordinates': [
+        ]
+      },
+    }
+  ]
+}
+
 const Route = ({ map }) => {
   useEffect(() => {
     map.on("load", () => {
       map.on('click', (e) => {
-        console.log(e.lngLat)
-        var point = {
+        // console.log(e.lngLat)
+        const point = {
           'type': 'Feature',
           'geometry': {
-          'type': 'Point',
-          'coordinates': [e.lngLat.lng, e.lngLat.lat]
+            'type': 'Point',
+            'coordinates': [e.lngLat.lng, e.lngLat.lat]
           },
           'properties': {
-          'id': String(new Date().getTime())
+            'id': String(new Date().getTime())
           }
         }
         geojsonPuntoSource.features.push(point)
         map.getSource('PuntoSource').setData(geojsonPuntoSource)
-        console.log(geojsonPuntoSource.features)
+        // console.log(geojsonPuntoSource.features)
+
+        geojsonLineasSource.features[0].geometry.coordinates.push([e.lngLat.lng, e.lngLat.lat])
+        map.getSource('LineasSource').setData(geojsonLineasSource)
       })
       map.addSource("PuntoSource", {
         type: "geojson",
         data: geojsonPuntoSource,
-      });
+      })
 
       map.addLayer({
         id: "PuntoSource",
@@ -91,12 +100,31 @@ const Route = ({ map }) => {
           "circle-opacity": 0.8,
           "circle-radius": 5
         },
-      });
+      })
+
+      map.addSource("LineasSource", {
+        type: "geojson",
+        data: geojsonLineasSource,
+      })
+
+      map.addLayer({
+        id: 'Lineas',
+        type: 'line',
+        source: 'LineasSource',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#000',
+          'line-width': 2.5
+        }
+      })
 
       map.addSource("BuenosAires", {
         type: "geojson",
         data: geojsonBsAs,
-      });
+      })
 
       map.addLayer({
         id: "BuenosAires",
@@ -107,8 +135,8 @@ const Route = ({ map }) => {
           "fill-color": "#088",
           "fill-opacity": 0.8,
         },
-      });
-    });
+      })
+    })
     /*map.on("load", () => {
       map.addSource("LineString", {
         type: "geojson",
@@ -131,9 +159,9 @@ const Route = ({ map }) => {
     });
     console.log('Layer: ', map.getLayer('LineStringLayer'))
     console.log('Source: ', map.getSource('LineString'))*/
-  }, [map]);
+  }, [map])
 
-  return null;
-};
+  return null
+}
 
 export default Route;

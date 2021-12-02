@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { Marker } from "maplibre-gl";
+import { useEffect, useState } from "react"
+import { Marker } from "maplibre-gl"
+import useStyles from './styles'
 
 const MarkerComponent = ({ map }) => {
   const [marker, setMarker] = useState(null);
-  const coordinates = document.getElementById("coordinates");
+  const coordinates = document.getElementById("coordinates")
+  const classes = useStyles()
 
   useEffect(() => {
     setMarker(
@@ -31,7 +33,9 @@ const MarkerComponent = ({ map }) => {
 
   }, [marker])
 
-  return null;
+  return (
+    <pre id="coordinates" className={classes.coordinates}></pre>
+  )
 };
 
 export default MarkerComponent;

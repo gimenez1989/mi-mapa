@@ -1,15 +1,14 @@
-import React from "react";
-import Map from "./Mapa/index";
-import "./App.css";
+import React from 'react'
+import Map from './Mapa'
 
-function App() {
 
+const App = () => {
 
   return (
     <div>
       <Map />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

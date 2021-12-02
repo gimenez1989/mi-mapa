@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Map } from "maplibre-gl";
-import MarkerComponent from "../Marker";
-import Route from "../Route";
+import React, { useEffect, useState } from "react"
+import { Map } from "maplibre-gl"
+import { Container, Button , Box } from '@material-ui/core'
+import MarkerComponent from "../Marker"
+import Route from "../Route"
+import useStyles from './styles'
 
 const MapUnico = () => {
-  const [map, setMap] = useState(null);
-  const [visibility, setVisibility] = useState(false);
+  const [map, setMap] = useState(null)
+  const [visibility, setVisibility] = useState(false)
+  const classes = useStyles()
 
   const change = () => {
     if (visibility === false) {
-      map.setLayoutProperty("simple-capa1", "visibility", "none");
-      map.setLayoutProperty("simple-capa2", "visibility", "visible");
+      map.setLayoutProperty("simple-capa1", "visibility", "none")
+      map.setLayoutProperty("simple-capa2", "visibility", "visible")
     } else {
-      map.setLayoutProperty("simple-capa1", "visibility", "visible");
-      map.setLayoutProperty("simple-capa2", "visibility", "none");
+      map.setLayoutProperty("simple-capa1", "visibility", "visible")
+      map.setLayoutProperty("simple-capa2", "visibility", "none")
     }
-    setVisibility(!visibility);
+    setVisibility(!visibility)
   };
 
   useEffect(() => {
@@ -72,26 +75,26 @@ const MapUnico = () => {
         zoom: 12, // starting zoom
       })
     );
-  }, []);
+  }, [])
 
   return (
-    <div>
-      <div style={{ height: "93vh" }} id="mapContainer"></div>
-      {map && <MarkerComponent map={map} />}
-      {map && <Route map={map} />}
+    <Container className={classes.mapContainer} id="mapContainer">
+      <Box>
+        {map && <MarkerComponent map={map} />}
+        {map && <Route map={map} />}
 
-      {map && (
-        <button className="buttonCapas"
-          onClick={() => {
-            change();
-          }}
-        >
-          {visibility ? <p>Capa_2</p> : <p>Capa_1</p>}
-        </button>
-      )}
-      <pre id="coordinates" class="coordinates"></pre>
-    </div>
-  );
-};
+        {map && (
+          <Button variant="contained" color="primary"
+            onClick={() => {
+              change();
+            }}
+          >
+            {visibility ? <p>Capa_2</p> : <p>Capa_1</p>}
+          </Button>
+        )}
+      </Box>
+    </Container>
+  )
+}
 
-export default MapUnico;
+export default MapUnico

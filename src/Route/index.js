@@ -68,21 +68,49 @@ const Route = ({ map }) => {
   useEffect(() => {
     map.on("load", () => {
       map.on('click', (e) => {
-        // console.log(e.lngLat)
-        const point = {
-          'type': 'Feature',
-          'geometry': {
-            'type': 'Point',
-            'coordinates': [e.lngLat.lng, e.lngLat.lat]
-          },
-          'properties': {
-            'id': String(new Date().getTime())
-          }
-        }
-        geojsonPuntoSource.features.push(point)
-        map.getSource('PuntoSource').setData(geojsonPuntoSource)
-        // console.log(geojsonPuntoSource.features)
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: ['PuntoSource']
+        })
 
+        if (geojsonPuntoSource.features.length > 1)
+          geojsonPuntoSource.features.pop() 
+
+        // If a feature was clicked, remove it from the map.
+        // console.log('geojsonPuntoSource.features : ', geojsonPuntoSource.features  )
+        if (features.length) {
+          // console.log('features: ', features)
+          const id = features[0].properties.id;
+          // console.log('id: ', id)
+          geojsonPuntoSource.features = geojsonPuntoSource.features.filter(
+            (point) => point.properties.id !== id
+          )
+          // console.log('geojsonPuntoSource: ' ,geojsonPuntoSource)
+          // console.log(e.lngLat)
+        } else {
+          const point = {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [e.lngLat.lng, e.lngLat.lat]
+            },
+            'properties': {
+              'id': String(new Date().getTime())
+            }
+          }
+          console.log('geojsonLineasSource: ', geojsonLineasSource)
+          if (geojsonLineasSource.features.length > 1) {
+            geojsonLineasSource.geometry.coordinates = geojsonPuntoSource.features.map(
+              (point) => point.geometry.coordinates
+            )
+            geojsonLineasSource.features.push(geojsonLineasSource)
+            console.log('geojsonLineasSource: ', geojsonLineasSource)
+          }
+          // console.log('point: ', point)
+          geojsonPuntoSource.features.push(point)
+          // console.log('geojsonPuntoSource: ', geojsonPuntoSource)
+          map.getSource('PuntoSource').setData(geojsonPuntoSource)
+          // console.log(geojsonPuntoSource.features)
+        }
         geojsonLineasSource.features[0].geometry.coordinates.push([e.lngLat.lng, e.lngLat.lat])
         map.getSource('LineasSource').setData(geojsonLineasSource)
       })
@@ -137,12 +165,11 @@ const Route = ({ map }) => {
         },
       })
     })
-    /*map.on("load", () => {
+    /* map.on("load", () => {
       map.addSource("LineString", {
         type: "geojson",
         data: geojson,
       });
-
       map.addLayer({
         id: "LineStringLayer",
         type: "line",
@@ -156,12 +183,12 @@ const Route = ({ map }) => {
           "line-width": 10,
         },
       });
-    });
+    }); */
     console.log('Layer: ', map.getLayer('LineStringLayer'))
-    console.log('Source: ', map.getSource('LineString'))*/
+    console.log('Source: ', map.getSource('LineString'))
   }, [map])
 
   return null
 }
 
-export default Route;
+export default Route

@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
     maxWidth: '100%',
     padding: 0,
     lineHeight: 0
+  },
+  button: {
+    position: 'relative; z-index:1'
   }
   }))
   

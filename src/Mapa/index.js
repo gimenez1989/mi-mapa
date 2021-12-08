@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Map } from "maplibre-gl"
-import { Container, Button , Box } from '@material-ui/core'
+import { Container, Button, Box } from '@material-ui/core'
 import MarkerComponent from "../Marker"
 import Route from "../Route"
 import useStyles from './styles'
@@ -84,7 +84,7 @@ const MapUnico = () => {
         {map && <Route map={map} />}
 
         {map && (
-          <Button className={classes.button} variant="contained" color="primary"
+          <Button className={classes.button}
             onClick={() => {
               change();
             }}

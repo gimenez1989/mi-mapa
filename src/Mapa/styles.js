@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/styles'
 
 
 export default makeStyles((theme) => ({
-  mapContainer:{
+  mapContainer: {
     height: '10%',
     minHeight: '100vh',
     margin: 0,
@@ -11,7 +11,9 @@ export default makeStyles((theme) => ({
     lineHeight: 0
   },
   button: {
-    position: 'relative; z-index:1'
+    backgroundColor: '#008CBA',
+    fontSize: '10px',
+    position: 'relative; z-index:1',
+    padding: '0'
   }
-  }))
-  
+}))

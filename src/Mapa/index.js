@@ -85,6 +85,8 @@ const MapUnico = () => {
 
         {map && (
           <Button className={classes.button}
+            variant="contained"
+            color="primary"
             onClick={() => {
               change();
             }}

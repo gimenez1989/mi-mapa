@@ -14,6 +14,10 @@ export default makeStyles((theme) => ({
     backgroundColor: '#008CBA',
     fontSize: '10px',
     position: 'relative; z-index:1',
-    padding: '0'
+    padding: '0',
+    float: 'right',
+    display: 'flex',
+    top: '550px',
+    margin: '25px'
   }
 }))

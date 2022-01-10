@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
     coordinates: {
         background: 'rgba(0, 0, 0, 0.5)',
         color: '#fff',
-        position: 'absolute',
+        position: 'absolute; z-index:1',
         bottom: '40px',
         left: '10px',
         padding: '5px 10px',
